@@ -1,5 +1,4 @@
 import { SuperBlocks } from '../../../config/certification-settings';
-import { emailToABVariant } from '../utils/A-B-tester';
 import { ns as MainApp } from './action-types';
 
 export const savedChallengesSelector = state =>
@@ -13,13 +12,7 @@ export const currentChallengeIdSelector = state =>
   state[MainApp].currentChallengeId;
 
 export const emailSelector = state => userSelector(state).email;
-export const isVariantASelector = state => {
-  const email = emailSelector(state);
-  // if the user is not signed in and the user info is not available.
-  // always return A the control variant
-  if (!email) return true;
-  return emailToABVariant(email).isVariantA;
-};
+
 export const isDonatingSelector = state => userSelector(state).isDonating;
 export const isOnlineSelector = state => state[MainApp].isOnline;
 export const isServerOnlineSelector = state => state[MainApp].isServerOnline;
@@ -100,7 +93,8 @@ export const certificatesByNameSelector = username => state => {
     isSciCompPyCertV7,
     isDataAnalysisPyCertV7,
     isMachineLearningPyCertV7,
-    isRelationalDatabaseCertV8
+    isRelationalDatabaseCertV8,
+    isCollegeAlgebraPyCertV8
   } = userByNameSelector(username)(state);
   return {
     hasModernCert:
@@ -115,7 +109,8 @@ export const certificatesByNameSelector = username => state => {
       isSciCompPyCertV7 ||
       isDataAnalysisPyCertV7 ||
       isMachineLearningPyCertV7 ||
-      isRelationalDatabaseCertV8,
+      isRelationalDatabaseCertV8 ||
+      isCollegeAlgebraPyCertV8,
     hasLegacyCert:
       isFrontEndCert || isBackEndCert || isDataVisCert || isInfosecQaCert,
     isFullStackCert,
@@ -174,6 +169,11 @@ export const certificatesByNameSelector = username => state => {
         show: isRelationalDatabaseCertV8,
         title: 'Relational Database Certification',
         certSlug: 'relational-database-v8'
+      },
+      {
+        show: isCollegeAlgebraPyCertV8,
+        title: 'College Algebra with Python Certification',
+        certSlug: 'college-algebra-with-python-v8'
       }
     ],
     legacyCerts: [
@@ -209,6 +209,8 @@ export const certificatesByNameSelector = username => state => {
 };
 
 export const userFetchStateSelector = state => state[MainApp].userFetchState;
+export const allChallengesInfoSelector = state =>
+  state[MainApp].allChallengesInfo;
 export const userProfileFetchStateSelector = state =>
   state[MainApp].userProfileFetchState;
 export const usernameSelector = state => state[MainApp].appUsername;
@@ -217,5 +219,3 @@ export const userSelector = state => {
 
   return state[MainApp].user[username] || {};
 };
-
-export const sessionMetaSelector = state => state[MainApp].sessionMeta;

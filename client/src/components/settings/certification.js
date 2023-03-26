@@ -16,7 +16,7 @@ import {
   legacyProjectMap
 } from '../../resources/cert-and-project-map';
 import { FlashMessages } from '../Flash/redux/flash-messages';
-import ProjectModal from '../SolutionViewer/ProjectModal';
+import ProjectModal from '../SolutionViewer/project-modal';
 import { FullWidthRow, Spacer } from '../helpers';
 import { SolutionDisplayWidget } from '../solution-display-widget';
 import SectionHeader from './section-header';
@@ -42,6 +42,7 @@ const propTypes = {
   isBackEndCert: PropTypes.bool,
   isDataAnalysisPyCertV7: PropTypes.bool,
   isDataVisCert: PropTypes.bool,
+  isCollegeAlgebraPyCertV8: PropTypes.bool,
   isFrontEndCert: PropTypes.bool,
   isFrontEndLibsCert: PropTypes.bool,
   isFullStackCert: PropTypes.bool,
@@ -82,7 +83,8 @@ const isCertSelector = ({
   isSciCompPyCertV7,
   isDataAnalysisPyCertV7,
   isMachineLearningPyCertV7,
-  isRelationalDatabaseCertV8
+  isRelationalDatabaseCertV8,
+  isCollegeAlgebraPyCertV8
 }) => ({
   is2018DataVisCert,
   isApisMicroservicesCert,
@@ -99,7 +101,8 @@ const isCertSelector = ({
   isSciCompPyCertV7,
   isDataAnalysisPyCertV7,
   isMachineLearningPyCertV7,
-  isRelationalDatabaseCertV8
+  isRelationalDatabaseCertV8,
+  isCollegeAlgebraPyCertV8
 });
 
 const isCertMapSelector = createSelector(
@@ -119,7 +122,8 @@ const isCertMapSelector = createSelector(
     isSciCompPyCertV7,
     isDataAnalysisPyCertV7,
     isMachineLearningPyCertV7,
-    isRelationalDatabaseCertV8
+    isRelationalDatabaseCertV8,
+    isCollegeAlgebraPyCertV8
   }) => ({
     'Responsive Web Design': isRespWebDesignCert,
     'JavaScript Algorithms and Data Structures': isJsAlgoDataStructCert,
@@ -132,6 +136,7 @@ const isCertMapSelector = createSelector(
     'Data Analysis with Python': isDataAnalysisPyCertV7,
     'Machine Learning with Python': isMachineLearningPyCertV7,
     'Relational Database': isRelationalDatabaseCertV8,
+    'College Algebra with Python': isCollegeAlgebraPyCertV8,
     'Legacy Front End': isFrontEndCert,
     'Legacy Data Visualization': isDataVisCert,
     'Legacy Back End': isBackEndCert,
@@ -213,9 +218,10 @@ export class CertificationSettings extends Component {
       <SolutionDisplayWidget
         completedChallenge={completedProject}
         dataCy={projectTitle}
+        projectTitle={projectTitle}
         showUserCode={showUserCode}
         showProjectPreview={showProjectPreview}
-        displayContext={'settings'}
+        displayContext='settings'
       ></SolutionDisplayWidget>
     );
   };
@@ -225,9 +231,9 @@ export class CertificationSettings extends Component {
     const { certSlug } = first(projectsMap[certName]);
     return (
       <FullWidthRow key={certName}>
-        <Spacer />
+        <Spacer size='medium' />
         <h3 className='text-center' id={`cert-${certSlug}`}>
-          {certName}
+          {t(`certification.title.${certName}`, certName)}
         </h3>
         <Table>
           <thead>
@@ -265,7 +271,9 @@ export class CertificationSettings extends Component {
       .map(({ link, title, id }) => (
         <tr className='project-row' key={id}>
           <td className='project-title col-sm-8 col-xs-8'>
-            <Link to={link}>{title}</Link>
+            <Link to={link}>
+              {t(`certification.project.title.${title}`, title)}
+            </Link>
           </td>
           <td className='project-solution col-sm-4 col-xs-4'>
             {this.getProjectSolution(id, title)}
@@ -283,7 +291,8 @@ export class CertificationSettings extends Component {
               data-cy={`btn-for-${certSlug}`}
               onClick={createClickHandler(certSlug)}
             >
-              {isCert ? t('buttons.show-cert') : t('buttons.claim-cert')}
+              {isCert ? t('buttons.show-cert') : t('buttons.claim-cert')}{' '}
+              <span className='sr-only'>{certName}</span>
             </Button>
           </td>
         </tr>
@@ -336,21 +345,31 @@ export class CertificationSettings extends Component {
     };
     return (
       <FullWidthRow key={certSlug}>
-        <Spacer />
-        <h3 className='text-center'>Legacy Full Stack Certification</h3>
+        <Spacer size='medium' />
+        <h3 className='text-center'>
+          {t('certification.title.Legacy Full Stack Certification')}
+        </h3>
         <div>
           <p>
             {t('settings.claim-legacy', {
-              cert: 'Legacy Full Stack Certification'
+              cert: t('certification.title.Legacy Full Stack Certification')
             })}
           </p>
           <ul>
-            <li>Responsive Web Design</li>
-            <li>JavaScript Algorithms and Data Structures</li>
-            <li>Front End Development Libraries</li>
-            <li>Data Visualization</li>
-            <li>Back End Development and APIs</li>
-            <li>Legacy Information Security and Quality Assurance</li>
+            <li>{t('certification.title.Responsive Web Design')}</li>
+            <li>
+              {t(
+                'certification.title.JavaScript Algorithms and Data Structures'
+              )}
+            </li>
+            <li>{t('certification.title.Front End Development Libraries')}</li>
+            <li>{t('certification.title.Data Visualization')}</li>
+            <li>{t('certification.title.Back End Development and APIs')}</li>
+            <li>
+              {t(
+                'certification.title.Legacy Information Security and Quality Assurance'
+              )}
+            </li>
           </ul>
         </div>
 
@@ -384,7 +403,7 @@ export class CertificationSettings extends Component {
             </Button>
           )}
         </div>
-        <Spacer />
+        <Spacer size='medium' />
       </FullWidthRow>
     );
   };

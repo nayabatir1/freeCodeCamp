@@ -13,12 +13,15 @@ import DropDown from '../../../assets/icons/dropdown';
 import GreenNotCompleted from '../../../assets/icons/green-not-completed';
 import GreenPass from '../../../assets/icons/green-pass';
 import { Link, Spacer } from '../../../components/helpers';
-import { executeGA } from '../../../redux/actions';
 import { completedChallengesSelector } from '../../../redux/selectors';
 import { ChallengeNode, CompletedChallenge } from '../../../redux/prop-types';
 import { playTone } from '../../../utils/tone';
 import { makeExpandedBlockSelector, toggleBlock } from '../redux';
-import { isNewJsCert, isNewRespCert } from '../../../utils/is-a-cert';
+import {
+  isCollegeAlgebraPyCert,
+  isNewJsCert,
+  isNewRespCert
+} from '../../../utils/is-a-cert';
 import {
   isCodeAllyPractice,
   isFinalProject
@@ -45,20 +48,18 @@ const mapStateToProps = (
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) =>
-  bindActionCreators({ toggleBlock, executeGA }, dispatch);
+  bindActionCreators({ toggleBlock }, dispatch);
 
 interface BlockProps {
   blockDashedName: string;
   challenges: ChallengeNode[];
   completedChallengeIds: string[];
-  executeGA: typeof executeGA;
   isExpanded: boolean;
   superBlock: SuperBlocks;
   t: TFunction;
   toggleBlock: typeof toggleBlock;
 }
-
-export class Block extends Component<BlockProps> {
+class Block extends Component<BlockProps> {
   static displayName: string;
   constructor(props: BlockProps) {
     super(props);
@@ -67,15 +68,8 @@ export class Block extends Component<BlockProps> {
   }
 
   handleBlockClick(): void {
-    const { blockDashedName, toggleBlock, executeGA } = this.props;
+    const { blockDashedName, toggleBlock } = this.props;
     void playTone('block-toggle');
-    executeGA({
-      type: 'event',
-      data: {
-        category: 'Map Block Click',
-        action: blockDashedName
-      }
-    });
     toggleBlock(blockDashedName);
   }
 
@@ -109,6 +103,8 @@ export class Block extends Component<BlockProps> {
 
     const isNewResponsiveWebDesign = isNewRespCert(superBlock);
     const isNewJsAlgos = isNewJsCert(superBlock);
+    const isOdinProject = blockDashedName == 'the-odin-project';
+    const isCollegeAlgebraPy = isCollegeAlgebraPyCert(superBlock);
 
     let completedCount = 0;
     const challengesWithCompleted = challenges.map(({ challenge }) => {
@@ -342,19 +338,21 @@ export class Block extends Component<BlockProps> {
     );
 
     const blockrenderer = () => {
-      if (isProjectBlock)
-        return isNewResponsiveWebDesign || isNewJsAlgos
+      if (isProjectBlock && !isOdinProject)
+        return isNewResponsiveWebDesign || isNewJsAlgos || isCollegeAlgebraPy
           ? GridProjectBlock
           : ProjectBlock;
-      return isNewResponsiveWebDesign || isNewJsAlgos ? GridBlock : Block;
+      return isNewResponsiveWebDesign || isNewJsAlgos || isCollegeAlgebraPy
+        ? GridBlock
+        : Block;
     };
 
     return (
       <>
         {blockrenderer()}
-        {(isNewResponsiveWebDesign || isNewJsAlgos) &&
+        {(isNewResponsiveWebDesign || isNewJsAlgos || isCollegeAlgebraPy) &&
         !isProjectBlock ? null : (
-          <Spacer />
+          <Spacer size='medium' />
         )}
       </>
     );

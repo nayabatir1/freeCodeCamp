@@ -11,6 +11,7 @@ import Intro from '../components/Intro';
 import Map from '../components/Map';
 import { Spacer } from '../components/helpers';
 import LearnLayout from '../components/layouts/learn';
+import { defaultDonation } from '../../../config/donation-settings';
 import {
   isSignedInSelector,
   userSelector,
@@ -82,11 +83,10 @@ function LearnPage({
 
   const onDonationAlertClick = () => {
     executeGA({
-      type: 'event',
-      data: {
-        category: 'Donation Related',
-        action: `learn donation alert click`
-      }
+      event: 'donation_related',
+      action: `Learn Donation Alert Click`,
+      duration: defaultDonation.donationDuration,
+      amount: defaultDonation.donationAmount
     });
   };
   return (
@@ -106,7 +106,7 @@ function LearnPage({
               isDonating={isDonating}
             />
             <Map />
-            <Spacer size={2} />
+            <Spacer size='large' />
           </Col>
         </Row>
       </Grid>

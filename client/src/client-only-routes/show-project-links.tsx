@@ -5,7 +5,7 @@ import { Trans, useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 
 import { Link, Spacer } from '../components/helpers';
-import ProjectModal from '../components/SolutionViewer/ProjectModal';
+import ProjectModal from '../components/SolutionViewer/project-modal';
 import { CompletedChallenge, User } from '../redux/prop-types';
 import {
   legacyProjectMap,
@@ -83,6 +83,7 @@ const ShowProjectLinks = (props: ShowProjectLinksProps): JSX.Element => {
       <SolutionDisplayWidget
         completedChallenge={completedProject}
         dataCy={`${projectTitle} solution`}
+        projectTitle={projectTitle}
         displayContext='certification'
         showUserCode={showUserCode}
         showProjectPreview={showProjectPreview}
@@ -109,7 +110,7 @@ const ShowProjectLinks = (props: ShowProjectLinksProps): JSX.Element => {
           <tr key={ind}>
             <td>
               <Link className='project-link' to={certLocation} external>
-                {t(`certification.project.title.${cert.title}`, cert.title)}
+                {t(`certification.title.${cert.title}`, cert.title)}
               </Link>
             </td>
           </tr>
@@ -159,7 +160,7 @@ const ShowProjectLinks = (props: ShowProjectLinksProps): JSX.Element => {
           : 'certification.project.heading',
         { user: name }
       )}
-      <Spacer />
+      <Spacer size='medium' />
       <Table striped>
         <thead>
           <tr>
@@ -169,7 +170,7 @@ const ShowProjectLinks = (props: ShowProjectLinksProps): JSX.Element => {
         </thead>
         <tbody>{renderProjectsFor(certName)}</tbody>
       </Table>
-      <Spacer />
+      <Spacer size='medium' />
       <ProjectModal
         challengeFiles={completedChallenge?.challengeFiles ?? null}
         handleSolutionModalHide={handleSolutionModalHide}

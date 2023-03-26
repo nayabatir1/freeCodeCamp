@@ -20,7 +20,7 @@ dashedName: install-and-set-up-mongoose
 -   接着，你将看到一个 `.replit` 窗口。
 -   选择 `Use run command` 并点击 `Done` 按钮。
 
-当你完成后，请将一个确保正常运行的 demo（项目演示）托管在可以公开访问的平台上。 然后将 demo 的 URL 提交到 `Solution Link` 字段中。
+当你完成后，请将一个确保正常运行的 demo（项目演示）托管在可以公开访问的平台上。 然后将 demo 的 URL 提交到 Solution Link 字段中。
 
 在这个挑战中，你将建立一个 MongoDB Atlas 数据库并导入连接到它所需的软件包。
 
@@ -32,7 +32,7 @@ dashedName: install-and-set-up-mongoose
 
 **注意：**如果你使用的是 Replit，则无法创建 `.env` 文件。 相反，使用内置的 <dfn>SECRETS</dfn> 选项卡来添加变量。 在使用 <em>SECRETS</em> 选项卡时，<em>不要</em>将值括在引号中。
 
-完成后，使用以下语法连接到数据库：
+When you are done, connect to the database by calling the `connect` method within your `myApp.js` file by using the following syntax:
 
 ```js
 mongoose.connect(<Your URI>, { useNewUrlParser: true, useUnifiedTopology: true });

@@ -20,7 +20,7 @@ Si usas Replit, sigue estos pasos para configurar el proyecto:
 -   A continuación, verás una ventana de `.replit`.
 -   Selecciona `Use run command` y has clic el botón `Done`.
 
-Una vez que hayas acabado, asegúrate de que un demo funcional del proyecto esté alojado en algún sitio público. Por último, envía la URL mediante el campo `Solution Link`.
+Una vez que hayas acabado, asegúrate de que un demo funcional del proyecto esté alojado en algún sitio público. A continuación, introduce la URL en el campo enlace a la solución.
 
 En este desafío, configurarás una base de datos de MongoDB Atlas e importarás los paquetes necesarios para conectarse a él.
 
@@ -32,7 +32,7 @@ Sigue <a href='https://www.freecodecamp.org/news/get-started-with-mongodb-atlas/
 
 **Nota:** Si estás usando Replit, no puedes crear un archivo `.env`. En su lugar, utiliza la pestaña integrada <dfn>SECRETS</dfn> para añadir la variable. <em>No</em> envuelvas los valores con comillas al usar la pestaña <em>SECRETS</em>.
 
-Cuando hayas terminado, conéctate a la base de datos usando la siguiente sintaxis:
+When you are done, connect to the database by calling the `connect` method within your `myApp.js` file by using the following syntax:
 
 ```js
 mongoose.connect(<Your URI>, { useNewUrlParser: true, useUnifiedTopology: true });

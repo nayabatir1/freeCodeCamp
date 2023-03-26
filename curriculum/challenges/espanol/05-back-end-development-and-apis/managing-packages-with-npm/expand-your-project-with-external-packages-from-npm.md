@@ -22,7 +22,7 @@ En esta sección, los paquetes que tu proyecto necesita se almacenan usando el s
 
 # --instructions--
 
-Añade la versión "1.1.0" del paquete `@freecodecamp/example` al campo `dependencies` del archivo `package.json`.
+Añade la versión `1.1.0` del paquete `@freecodecamp/example` al campo `dependencies` del archivo `package.json`.
 
 **Nota:** `@freecodecamp/example` es un paquete falso usado como una herramienta de aprendizaje.
 
